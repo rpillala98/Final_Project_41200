@@ -14,7 +14,5 @@ Before getting started, ensure you have the following prerequisites installed an
 
 #### Project Setup
 **Clone the Repository**: Clone the project repository from Git to your local machine.
-'''
-git clone https://github.com/rpillala98/Final_Project_41200
+```git clone https://github.com/rpillala98/Final_Project_41200```
 
-'''
