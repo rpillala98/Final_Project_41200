@@ -22,26 +22,36 @@ git clone https://github.com/rpillala98/Final_Project_41200
 **2. Navigate to Project Directories**:
 - **`project_mail`**: Navigate to the **`project_mail`** directory to deploy the cloud functions.
 
-```cd project_mail```
+```bash
+cd project_mail
+```
 
 - **`web`**: Navigate to the **`web directory`** under **`project_mail`** directory to run the web application.
 
-```cd web```
+```bash
+cd web
+```
 
 **3. Install Dependencies**:
 - In the **`project_mail`** directory, ensure you have Node.js installed, and install the necessary dependencies using npm.
 
-```npm install @sendgrid/mail @google-cloud/storage @google-cloud/firestore @google-cloud/bigquery csv-parser fs path```
+```bash
+npm install @sendgrid/mail @google-cloud/storage @google-cloud/firestore @google-cloud/bigquery csv-parser fs path
+```
 
 - Similarly, in the **`web directory`**, install required dependencies for the web application.
-```npm install express path @google-cloud/pubsub body-parser```
+```bash
+npm install express path @google-cloud/pubsub body-parser
+```
 
 **4. Set Up Environment Variables**:
 Set up environment variables for necessary credentials and API keys required for GCP, and SendGrid. Refer to respective documentation for obtaining and configuring these credentials.
 
 **5. Deploy Cloud Functions**:
 Deploy the cloud functions from the **`project_mail`** directory using the provided command.
-```gcloud functions deploy VRS --runtime nodejs18 --trigger-topic vulnerability_report --entry-point Main --no-gen2```
+```bash
+gcloud functions deploy VRS --runtime nodejs18 --trigger-topic vulnerability_report --entry-point Main --no-gen2
+```
 
 **6. Run Web Application**:
 Run the web application from the **`web`** directory using Node.js.
