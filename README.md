@@ -72,6 +72,10 @@ gcloud functions deploy VRS --runtime nodejs18 --trigger-topic vulnerability_rep
 **6. Run Web Application**:
 Run the web application from the **`web`** directory using Node.js.
 
+```bash
+node app.js
+```
+
 **7. Access Vulnerability Reports**:
 - From the GCP console, click on "Web Preview" and preview on port 8080.
 - Fill out the subscription form with your email address and asset name to subscribe and receive vulnerability reports.
