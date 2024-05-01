@@ -20,11 +20,11 @@ Before getting started, ensure you have the following prerequisites installed an
 **2. Navigate to Project Directories**:
 - **`project_mail`**: Navigate to the **`project_mail`** directory to deploy the cloud functions.
 
-```cd project_mail
-```
-- **`web`**: Navigate to the **`web directory`** to run the web application.
+```cd project_mail```
 
-```cd web
-```
+- **`web`**: Navigate to the **`web directory`** under project_mail directory to run the web application.
+
+```cd web```
+
 
 
