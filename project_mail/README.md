@@ -13,7 +13,10 @@ Before getting started, ensure you have the following prerequisites installed an
 **SendGrid Account**: Sign up for a SendGrid account to enable email notifications and communication with subscribers.
 
 #### Project Setup
-**Clone the Repository**: Clone the project repository from Git to your local machine.
+**1. Clone the Repository**: Clone the project repository from Git to your local machine.
 
 ```git clone https://github.com/rpillala98/Final_Project_41200```
+
+**2. Navigate to Project Directories**:
+- project_mail: Navigate to the project_mail directory to deploy the cloud functions.
 
