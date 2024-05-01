@@ -1,13 +1,9 @@
-# TravelDeals Website
+# Website
 
-This is a website for the TravelDeals project. Navigate to the `web/` directory.
+This is a website for the Vulnerability Reporting System project. Navigate to the `web/` directory.
 
-**On first launch** install Node packages `npm install express path`
+**On first launch** install dependency Node packages `npm install express path`
 
-Run with `npm app`
+Run with `node app`
 
-pub-sub json objects 
-bodyparser is installed to format body coming in from reqs, form field in form 
-
-writing to pubsub is not instantaneous
 

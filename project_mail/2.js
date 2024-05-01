@@ -52,73 +52,94 @@ exports.WriteToBigQuery = async (message, context) => {
             });
         }
 
-        // Update or insert data into BigQuery for each asset
-        const dataset = bigquery.dataset(datasetId);
+        // Delete existing Reporting table if it exists
+        await deleteExistingTable(bigquery, datasetId, tableId);
 
-        for (const assetName in assetVulnerabilityCounts) {
-            const { NumActive, NumNew, NumFixed, IpAddresses } = assetVulnerabilityCounts[assetName];
-            const rowsToInsert = Array.from(IpAddresses).map(ipAddress => ({
-                IPAddress: ipAddress,
-                AssetName: assetName,
-                NumVulnerabilitiesPresent: NumActive + NumFixed,
-                NumPreviouslyDiscovered: NumActive - NumNew,
-                NumNewlyDiscovered: NumNew,
-                NumRemediated: NumFixed,
-            }));
+        // Create Reporting table
+        await createReportingTable(bigquery, datasetId, tableId);
 
-            // Check if the asset already exists in the table
-            const table = dataset.table(tableId);
-            const query = `SELECT * FROM ${datasetId}.${tableId} WHERE AssetName='${assetName}'`;
-            const [rows] = await bigquery.query(query);
+        // Insert new data into the reporting table after a delay
+        await new Promise(resolve => setTimeout(resolve, 5000)); // Adjust delay as needed
+        await insertDataIntoReportingTable(bigquery, datasetId, tableId, assetVulnerabilityCounts);
 
-            if (rows && rows.length > 0) {
-                // Compare the existing rows with the new rows
-                const existingRows = rows.map(row => ({
-                    IPAddress: row.IPAddress,
-                    AssetName: row.AssetName,
-                    NumVulnerabilitiesPresent: row.NumVulnerabilitiesPresent,
-                    NumPreviouslyDiscovered: row.NumPreviouslyDiscovered,
-                    NumNewlyDiscovered: row.NumNewlyDiscovered,
-                    NumRemediated: row.NumRemediated,
-                }));
-
-                const updatedRows = rowsToInsert.filter(newRow => {
-                    const existingRow = existingRows.find(row => row.IPAddress === newRow.IPAddress);
-                    if (!existingRow) return true; // Insert new row if it doesn't exist
-                    return !isEqual(existingRow, newRow); // Update row if there are differences
-                });
-
-                if (updatedRows.length > 0) {
-                    // Update the existing rows
-                    await table.insert(updatedRows);
-                }
-            } else {
-                // Insert new rows
-                await table.insert(rowsToInsert);
-            }
-        }
-
-        console.log('Data successfully inserted or updated in BigQuery.');
+        console.log('Data successfully inserted into BigQuery.');
 
     } catch (error) {
         console.error('Error writing data to BigQuery:', error);
     }
 };
 
-// Function to check if two objects are equal
-function isEqual(obj1, obj2) {
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
+async function deleteExistingTable(bigquery, datasetId, tableId) {
+    try {
+        const dataset = bigquery.dataset(datasetId);
+        const table = dataset.table(tableId);
 
-    if (keys1.length !== keys2.length) {
-        return false;
+        // Check if the table exists
+        const [exists] = await table.exists();
+        if (exists) {
+            // If the table exists, delete it
+            await table.delete();
+            console.log('Existing table deleted successfully.');
+        } else {
+            console.log('Table does not exist. Skipping deletion.');
+        }
+    } catch (error) {
+        // Log the error without throwing
+        console.error(`Error deleting existing table: ${error}`);
     }
+}
 
-    for (const key of keys1) {
-        if (obj1[key] !== obj2[key]) {
-            return false;
+async function createReportingTable(bigquery, datasetId, tableId) {
+    try {
+        const dataset = bigquery.dataset(datasetId);
+        const [table] = await dataset.createTable(tableId, {
+            schema: {
+                fields: [
+                    { name: 'IPAddress', type: 'STRING' },
+                    { name: 'AssetName', type: 'STRING' },
+                    { name: 'NumVulnerabilitiesPresent', type: 'INTEGER' },
+                    { name: 'NumPreviouslyDiscovered', type: 'INTEGER' },
+                    { name: 'NumNewlyDiscovered', type: 'INTEGER' },
+                    { name: 'NumRemediated', type: 'INTEGER' },
+                ],
+            },
+            // Specify 'exists' option to not throw an error if the table already exists
+            exists: 'skip'
+        });
+
+        console.log(`Table ${tableId} created successfully.`);
+    } catch (error) {
+        // Ignore the error if the table already exists
+        if (!error.message.includes('Already Exists:')) {
+            throw new Error(`Error creating reporting table: ${error}`);
         }
     }
+}
 
-    return true;
+async function insertDataIntoReportingTable(bigquery, datasetId, tableId, assetVulnerabilityCounts) {
+    try {
+        const dataset = bigquery.dataset(datasetId);
+        const table = dataset.table(tableId);
+
+        // Insert new data into the reporting table
+        const rowsToInsert = [];
+        for (const assetName in assetVulnerabilityCounts) {
+            const { NumActive, NumNew, NumFixed, IpAddresses } = assetVulnerabilityCounts[assetName];
+            Array.from(IpAddresses).forEach(ipAddress => {
+                rowsToInsert.push({
+                    IPAddress: ipAddress,
+                    AssetName: assetName,
+                    NumVulnerabilitiesPresent: NumActive + NumFixed,
+                    NumPreviouslyDiscovered: NumActive - NumNew,
+                    NumNewlyDiscovered: NumNew,
+                    NumRemediated: NumFixed,
+                });
+            });
+        }
+        await table.insert(rowsToInsert);
+
+        console.log('New data inserted successfully.');
+    } catch (error) {
+        throw new Error(`Error inserting new data into reporting table: ${error}`);
+    }
 }
