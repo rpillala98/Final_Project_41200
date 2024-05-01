@@ -26,5 +26,28 @@ Before getting started, ensure you have the following prerequisites installed an
 
 ```cd web```
 
+**3. Install Dependencies**:
+- In the **`project_mail`** directory, ensure you have Node.js installed, and install the necessary dependencies using npm.
 
+```npm install @sendgrid/mail @google-cloud/storage @google-cloud/firestore @google-cloud/bigquery csv-parser fs path```
 
+- Similarly, in the **`web directory`**, install required dependencies for the web application.
+```npm install express path @google-cloud/pubsub body-parser```
+
+**4. Set Up Environment Variables**:
+Set up environment variables for necessary credentials and API keys required for GCP, and SendGrid. Refer to respective documentation for obtaining and configuring these credentials.
+
+**5. Deploy Cloud Functions**:
+Deploy the cloud functions from the **`project_mail`** directory using the provided command.
+```gcloud functions deploy VRS --runtime nodejs18 --trigger-topic vulnerability_report --entry-point Main --no-gen2```
+
+**6. Run Web Application**:
+Run the web application from the **`web`** directory using Node.js.
+
+**7. Access Vulnerability Reports**:
+- From the GCP console, click on "Web Preview" and preview on port 8080.
+- Fill out the subscription form with your email address and asset name to subscribe and receive vulnerability reports.
+
+**8. Monitor Vulnerability Trends**:
+- Access Looker Studio by navigating to the Looker Studio platform in your GCP console. 
+- Explore the visualized vulnerability data and trends for informed decision-making.
