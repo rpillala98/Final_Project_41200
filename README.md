@@ -12,17 +12,18 @@ Before getting started, ensure you have the following prerequisites installed an
 
 **Qualys Account setup**: Obtain access to Qualys platform for vulnerability scanning and report generation.
 1. Create a Qualys account using a business email.
-2. Choose the **Cloud Agent** module from **`Sensor Management`** for vulnerability scanning.
+2. Choose the **Cloud Agent** module from **Sensor Management** for vulnerability scanning.
 3. Install Qualys Cloud Agents on target machines following the guidelines provided [here](https://docs.qualys.com/en/csam/latest/inventory/sensors/cloud_agent.htm).
+
 -Note: Installation procedures may vary based on the operating system used.
 
 **Generating Vulnerability Report**:
 1. After installing agents on target machines, access the Qualys console.
 2. Start an on-demand scan either through ad-hoc means or scheduling.
-3. Once the scan is completed, navigate to the **VMDR** module under **`Infrastructure Security`**.
+3. Once the scan is completed, navigate to the **VMDR** module under **Infrastructure Security**.
 4. Choose **`Report`** to create a vulnerability report using a template.
 5. Select the technical report template and identify the asset for which the report is generated as the report source.
-6. Download the generated report and upload it to the **`initial bucket`** in Google Cloud Storage.
+6. Download the generated report and upload it to the **initial bucket** in Google Cloud Storage.
 
 
 **SendGrid Account**: Sign up for a SendGrid account to enable email notifications and communication with subscribers.
