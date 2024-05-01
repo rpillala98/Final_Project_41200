@@ -15,8 +15,9 @@ Before getting started, ensure you have the following prerequisites installed an
 #### Project Setup
 **1. Clone the Repository**: Clone the project repository from Git to your local machine.
 
-```bash 
+```bash
 git clone https://github.com/rpillala98/Final_Project_41200
+```
 
 **2. Navigate to Project Directories**:
 - **`project_mail`**: Navigate to the **`project_mail`** directory to deploy the cloud functions.
