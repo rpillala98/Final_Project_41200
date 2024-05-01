@@ -28,7 +28,7 @@ Before getting started, ensure you have the following prerequisites installed an
 
 **SendGrid Account**: Sign up for a SendGrid account to enable email notifications and communication with subscribers.
 Please make sure to create an account with SendGrid, create an API key which is to be used for sending mails.
-Also, include the environment variables such as **`SENDGRID_API_KEY`** and **`SENDGRID_SENDER`** to be includeed in cloud function in order to receive mails from that sender.
+Also, include the environment variables such as **`SENDGRID_API_KEY`** and **`SENDGRID_SENDER`** to be includeed in cloud function created in order to receive mails from that sender.
 
 #### Project Setup
 **1. Clone the Repository**: Clone the project repository from Git to your local machine.
