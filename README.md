@@ -83,4 +83,4 @@ node app.js
 **8. Monitor Vulnerability Trends**:
 - Access Looker Studio by navigating to the Looker Studio platform in your GCP console. 
 - Explore the visualized vulnerability data and trends for informed decision-making.
-- Visualization for this project can be found from [here] (https://lookerstudio.google.com/reporting/98c46503-e89b-40ae-bd9c-45cc127af4b8/page/p3TyD)
+- Visualization for this project can be found from [here](https://lookerstudio.google.com/reporting/98c46503-e89b-40ae-bd9c-45cc127af4b8/page/p3TyD)
