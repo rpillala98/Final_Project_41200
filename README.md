@@ -23,7 +23,7 @@ Before getting started, ensure you have the following prerequisites installed an
 3. Once the scan is completed, navigate to the **VMDR** module under **Infrastructure Security**.
 4. Choose **`Report`** to create a vulnerability report using a template.
 5. Select the technical report template and identify the asset for which the report is generated as the report source.
-6. Download the generated report and upload it to the **initial bucket** in Google Cloud Storage.
+6. Download the generated report and upload it to the **initialbucket_2** in Google Cloud Storage.
 
 
 **SendGrid Account**: Sign up for a SendGrid account to enable email notifications and communication with subscribers.
